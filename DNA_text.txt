@@ -1,3 +1,2 @@
 AGTC
 GTCA
-test
