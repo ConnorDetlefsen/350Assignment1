@@ -2,25 +2,26 @@ Connor Detlefsen
 2312185 
 CPSC 350-02 
 Assignment 1
-A count: 7
-G count: 3
-T count: 2
-C count: 2
-Sum: 14
-Number of Lines: 4
-AA: 2
-AG: 2
-AC: 0
-AT: 0
-GG: 0
-GA: 0
-GC: 0
-GT: 1
-CC: 0
-CG: 0
-CA: 1
-CT: 0
-TT: 0
-TG: 0
-TC: 1
-TA: 0
+A probability: 0.25
+G probability 0.25
+T probability: 0.25
+C probability: 0.25
+Sum of the length of the DNA strings: 32
+Mean of the length of the DNA strings: 6.4
+Variance of the length of the DNA strings: 0.64
+AA: 0.0625
+AG: 0.0625
+AC: 0.0625
+AT: 0.0625
+GG: 0.0625
+GA: 0.0625
+GC: 0.0625
+GT: 0.0625
+CC: 0.0625
+CG: 0.0625
+CA: 0.0625
+CT: 0.0625
+TT: 0.0625
+TG: 0.0625
+TC: 0.0625
+TA: 0.0625
