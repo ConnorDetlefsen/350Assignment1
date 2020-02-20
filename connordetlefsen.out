@@ -9,6 +9,7 @@ C probability: 0.25
 Sum of the length of the DNA strings: 32
 Mean of the length of the DNA strings: 6.4
 Variance of the length of the DNA strings: 0.64
+Standard deviation of the length of the DNA strings: 0.8
 AA: 0.0625
 AG: 0.0625
 AC: 0.0625

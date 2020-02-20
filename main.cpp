@@ -28,7 +28,7 @@ int main(int argc, char** argv){
       ++LineCount;
       //cout << line << endl;
       for(int i = 0; i < line.length(); ++i){   //finds count of each letter
-        char c = line[i];
+        char c = toupper(line[i]);
         //putchar(toupper(c));
         if(c == 'A'){
           A++;
@@ -44,8 +44,8 @@ int main(int argc, char** argv){
 
       for(int i = 0; i < line.length(); i = i + 2){ //finds the pairs of DNA nucleotides
         bigramCount++;
-        char c = line[i];
-        char d = line[i+1];
+        char c = toupper(line[i]);
+        char d = toupper(line[i+1]);
         string putTogether;
         putTogether += c;
         putTogether += d;
@@ -95,15 +95,15 @@ int main(int argc, char** argv){
 
   //variance
   float variance = 0;
+  float stdev = 0;
   fin.open(fileName);
     for(int i = 0; i < LineCount; i++){     //reads in input from text file given from user
       getline(fin, line);
-      variance = variance+ pow((line.length() - mean),2);  //figure this out
+      variance = variance + pow((line.length() - mean),2);  //figure this out`
     }
+
    variance = variance / LineCount;
-
-
-
+   stdev = sqrt(variance);
 
   string info = "Connor Detlefsen \n2312185 \nCPSC 350-02 \nAssignment 1";      //this bit adds my info to the top of the file
 //  ofstream fout;  //creates ofstream object
@@ -120,6 +120,8 @@ int main(int argc, char** argv){
   //fout << "Number of Lines: " << LineCount << endl;
   fout << "Mean of the length of the DNA strings: " << mean << endl;
   fout << "Variance of the length of the DNA strings: " << variance << endl;
+  fout << "Standard deviation of the length of the DNA strings: " << stdev << endl;
+
   fout << "AA: " << AA/bigramCount << "\nAG: " << AG/bigramCount << "\nAC: " << AC/bigramCount << "\nAT: " << AT/bigramCount << endl;
   fout << "GG: " << GG/bigramCount << "\nGA: " << GA/bigramCount << "\nGC: " << GC/bigramCount << "\nGT: " << GT/bigramCount << endl;
   fout << "CC: " << CC/bigramCount << "\nCG: " << CG/bigramCount << "\nCA: " << CA/bigramCount << "\nCT: " << CT/bigramCount << endl;
