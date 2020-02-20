@@ -126,8 +126,9 @@ int main(int argc, char** argv){
          variance = variance / LineCount;
          stdev = sqrt(variance);
 
-
+        cout << "Calculations output to connordetlefsen.out" << endl;
         fout.open("connordetlefsen.out", ios::app); // allows us to append to contents of file instead of erasing it
+        fout << "Calculations for: " << fileName << endl;
         fout << "A probability: " << AProb << endl;  // write the count to the "connordetlefsen.out" file
         fout << "G probability " << GProb << endl;
         fout << "T probability: " << TProb << endl;
