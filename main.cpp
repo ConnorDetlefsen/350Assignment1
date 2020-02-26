@@ -116,7 +116,7 @@ int main(int argc, char** argv){
         fin.open(fileName);
           for(int i = 0; i < LineCount; i++){     //reads in input from text file given from user
             getline(fin, line);
-            variance = variance + pow((line.length() - mean),2);  //figure this out`
+            variance = variance + pow((line.length() - mean),2);
           }
         fin.close(); //close file reader after done
          variance = variance / LineCount;
@@ -154,7 +154,7 @@ int main(int argc, char** argv){
 
           for(int i = 0; i < d; ++i){
             float random = rand() / (double)RAND_MAX; //makes new random int 0 - .99
-            if(random < AProb) {
+            if(random < AProb) {    //these if statements use the random integer to run through and append nucleotides
               GaussianOutput += "A";
             }
             else if(random < CnAProb && random >= AProb) {
@@ -174,11 +174,3 @@ int main(int argc, char** argv){
   }
   return 0;
 }
-/*A probability: 0.25
-G probability 0.25
-T probability: 0.25
-C probability: 0.25
-Sum of the length of the DNA strings: 32
-Mean of the length of the DNA strings: 6.4
-Variance of the length of the DNA strings: 0.64
-Standard deviation of the length of the DNA strings: 0.8 */
