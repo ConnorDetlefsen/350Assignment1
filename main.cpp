@@ -2,7 +2,8 @@
 #include <fstream> //file streams
 #include <cctype> //used for to lower
 #include <cmath> //used for sqrt
-
+#include <cstdlib> //rand
+#include <math.h> //cos sin
 
 using namespace std;  //namespace=collection of classes
 
@@ -13,24 +14,22 @@ int main(int argc, char** argv){
   string line = "";
   int A = 0, G = 0, T = 0, C = 0;
   float AA = 0, AG = 0, AC = 0, AT = 0, GG = 0, GA = 0, GT = 0, GC = 0, TT = 0, TA = 0, TG = 0, TC = 0, CC = 0, CA = 0, CG = 0, CT = 0;
-  float LineCount = -1; //figure this out
+  float LineCount = -1; //needs to be -1 to take into account blank line
   float bigramCount = 0;
   int sum = 0;
 
   string info = "Connor Detlefsen \n2312185 \nCPSC 350-02 \nAssignment 1";      //this bit adds my info to the top of the file
-//  ofstream fout;  //creates ofstream object
   fout.open("connordetlefsen.out");   //automatically deletes content of file
   fout << info << endl;
   fout.close();
 
-
   bool running = true;
-  while(running){
+  while(running){ //loop to check for good input from user
 
     string fileName;
     string yesNo;
 
-    cout << "do you want to process a file? \nenter yes or no\n";
+    cout << "do you want to process a file? \nenter YES or NO, in all capitals\n";
     cin >> yesNo;
       if(yesNo == "NO")
         break;
@@ -47,10 +46,8 @@ int main(int argc, char** argv){
           while (fin) {     //reads in input from text file given from user
             getline(fin, line);
             ++LineCount;
-            //cout << line << endl;
             for(int i = 0; i < line.length(); ++i){   //finds count of each letter
               char c = toupper(line[i]);
-              //putchar(toupper(c));
               if(c == 'A'){
                 A++;
               }
@@ -107,12 +104,11 @@ int main(int argc, char** argv){
         }
         fin.close();
 
-        float mean = float(sum) / float(LineCount);
+        float mean = float(sum) / float(LineCount); //calculates probability of each DNA nucleotide
         float AProb = float(A) / float(sum);
         float GProb = float(G) / float(sum);
         float CProb = float(C) / float(sum);
         float TProb = float(T) / float(sum);
-
 
         //variance
         float variance = 0;
@@ -122,7 +118,7 @@ int main(int argc, char** argv){
             getline(fin, line);
             variance = variance + pow((line.length() - mean),2);  //figure this out`
           }
-
+        fin.close(); //close file reader after done
          variance = variance / LineCount;
          stdev = sqrt(variance);
 
@@ -134,20 +130,55 @@ int main(int argc, char** argv){
         fout << "T probability: " << TProb << endl;
         fout << "C probability: " << CProb  << endl;
         fout << "Sum of the length of the DNA strings: " << sum << endl;
-        //fout << "Number of Lines: " << LineCount << endl;
         fout << "Mean of the length of the DNA strings: " << mean << endl;
         fout << "Variance of the length of the DNA strings: " << variance << endl;
         fout << "Standard deviation of the length of the DNA strings: " << stdev << endl;
-
         fout << "AA: " << AA/bigramCount << "\nAG: " << AG/bigramCount << "\nAC: " << AC/bigramCount << "\nAT: " << AT/bigramCount << endl;
         fout << "GG: " << GG/bigramCount << "\nGA: " << GA/bigramCount << "\nGC: " << GC/bigramCount << "\nGT: " << GT/bigramCount << endl;
         fout << "CC: " << CC/bigramCount << "\nCG: " << CG/bigramCount << "\nCA: " << CA/bigramCount << "\nCT: " << CT/bigramCount << endl;
         fout << "TT: " << TT/bigramCount << "\nTG: " << TG/bigramCount << "\nTC: " << TC/bigramCount << "\nTA: " << TA/bigramCount << endl;
 
-        fin.close();
-        fout.close();
+        float pi = atan(1)*4; //pi
+        float CnAProb = (float(C) + float(A))/ float(sum);  //used in calculation for gaussian
+        float CnAnGProb = (float(C) + float(A) + float(G))/ float(sum);
 
+        string GaussianOutput = "";
+        fout << "Gaussian output for: " << fileName << endl;
+        for(int i = 0; i < 1000; ++i){
+
+          float a = (float) rand() / (double)RAND_MAX; //generates random decimal 0 - 1
+          float b = (float) rand() / (double)RAND_MAX;
+
+          float c = sqrt(-2 * log(a)) * (cos(2* pi * b));
+          float d =  (sqrt(variance) * c) + mean;  //how long length of line is
+
+          for(int i = 0; i < d; ++i){
+            float random = rand() / (double)RAND_MAX; //makes new random int 0 - .99
+            if(random < AProb) {
+              GaussianOutput += "A";
+            }
+            else if(random < CnAProb && random >= AProb) {
+              GaussianOutput += "C";
+            }
+            else if(random < CnAnGProb && random >= CnAProb){
+              GaussianOutput += "T";
+            }
+            else if(random <= 1 && random >= CnAnGProb){
+              GaussianOutput += "G";
+            }
+          }
+        GaussianOutput += "\n";
     }
-    return 0;
-
+    fout << GaussianOutput << endl;
+    fout.close();
+  }
+  return 0;
 }
+/*A probability: 0.25
+G probability 0.25
+T probability: 0.25
+C probability: 0.25
+Sum of the length of the DNA strings: 32
+Mean of the length of the DNA strings: 6.4
+Variance of the length of the DNA strings: 0.64
+Standard deviation of the length of the DNA strings: 0.8 */
